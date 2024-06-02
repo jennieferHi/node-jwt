@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">登入</h5>
+          <button onclick="sendData(event)">驗證身分</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  async function sendData(e) {
+    const refreshTokenCookie = document.cookie.split('; ').find(cookie => cookie.startsWith('refreshToken='));
+    const accessTokenCookie = document.cookie.split('; ').find(cookie => cookie.startsWith('accessToken='));
+    let refreshToken = refreshTokenCookie.split('=')[1];
+    let accessToken = accessTokenCookie.split('=')[1];
+
+    const response = await fetch("/protected", {
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({})
+    });
+    const data = await response.json();
+
+    if (data.success) {
+      return { success: true };
+    } else {
+      const renewResponse = await fetch("/renew", {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${refreshToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({})
+      });
+      const renewData = await renewResponse.json();
+      console.log(renewData);
+    }
+  }
+</script>
