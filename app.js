@@ -1,7 +1,6 @@
 // 使用cookie儲存
 // jwt 驗證機制
-const express = require("express");
-const db = require("./utils/mysql2-connect.js");
+const express = require("express"); 
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const secretKey = "adlfjaeijaekfmeadf";
@@ -115,7 +114,7 @@ app.delete("/viewPage", function (req, res) {
 app.use((req, res) => {
     res.status(404).send(`<h2>404 走錯路了</h2>`);
 });
-const port = process.env.WEB_PORT || 3002;
+const port =  3002;
 app.listen(port, () => {
     console.log(`伺服器啟動 使用通訊埠 http://127.0.0.1:${port}`);
 });

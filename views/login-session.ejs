@@ -35,10 +35,8 @@
     });
     const headers = r.headers.get("Authorization"); 
     const data = await r.json(); 
-    if (data.success) {
-      // localStorage.setItem("accessToken",headers);
-      // localStorage.setItem("refreshToken",JSON.stringify(data.refreshToken)); 
-      location.href="page"
+    if (data.success) { 
+     location.href="page"
     } else {
       alert(data.error || "帳號密碼輸入錯誤222")
     }
